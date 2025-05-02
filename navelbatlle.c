@@ -1,5 +1,35 @@
 #include <stdio.h>
 
+void aplicarHabilidade(char tabuleiro[10][10], int origemX, int origemY, int habilidade) {
+    for (int i = -2; i <= 2; i++) {
+        for (int j = -2; j <= 2; j++) {
+            int x = origemX + i;
+            int y = origemY + j;
+
+            // Verifica se está dentro do tabuleiro
+            if (x >= 0 && x < 10 && y >= 0 && y < 10) {
+                int absI = i > 0 ? i : -i;
+                int absJ = j > 0 ? j : -j;
+
+                // Cone (habilidade 1)
+                if (habilidade == 1 && i >= 0 && absJ <= i) {
+                    tabuleiro[x][y] = '5';
+                }
+
+                // Cruz (habilidade 2)
+                if (habilidade == 2 && (i == 0 || j == 0)) {
+                    tabuleiro[x][y] = '5';
+                }
+
+                // Octaedro (habilidade 3)
+                if (habilidade == 3 && absI + absJ <= 2) {
+                    tabuleiro[x][y] = '5';
+                }
+            }
+        }
+    }
+}
+
 void main() {
     //tabuleiro
 
@@ -51,6 +81,10 @@ void main() {
         }
         
     }
+
+    aplicarHabilidade(tabuleiro, 5, 2, 1); // Cone
+    aplicarHabilidade(tabuleiro, 1, 7, 2); // Cruz
+    aplicarHabilidade(tabuleiro, 6, 6, 3); // Octaedro
     
 
     //Exibindo o tabuleiro
